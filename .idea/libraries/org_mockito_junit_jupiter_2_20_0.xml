@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="org.mockito:junit-jupiter:2.20.0" type="repository">
+    <properties maven-id="org.mockito:junit-jupiter:2.20.0" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/junit-jupiter-2.20.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mockito-core-2.20.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/byte-buddy-1.8.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/byte-buddy-agent-1.8.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/objenesis-2.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-jupiter-api-5.1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apiguardian-api-1.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/opentest4j-1.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit-platform-commons-1.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
