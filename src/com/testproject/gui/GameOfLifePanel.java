@@ -20,10 +20,14 @@ public class GameOfLifePanel extends JPanel implements GameOfLifeListener {
     private void initializeAllCellsAsDeadCells() {
         for (int i = 0; i < img.getWidth(); i++)
         {
-            for (int j = 0; j < img.getHeight(); j++)
-            {
-                img.setRGB(i, j, DeadRgbColor);
-            }
+            drawVerticalLineAtCoordinate(i);
+        }
+    }
+
+    private void drawVerticalLineAtCoordinate(int i) {
+        for (int j = 0; j < img.getHeight(); j++)
+        {
+            img.setRGB(i, j, DeadRgbColor);
         }
     }
 
