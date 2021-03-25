@@ -1,6 +1,7 @@
 package com.testproject.gui;
 
 import com.testproject.gameoflife.GameOfLifeListener;
+import com.testproject.gameoflife.Location;
 import com.testproject.gameoflife.Location2D;
 
 import javax.swing.*;
@@ -34,12 +35,14 @@ public class GameOfLifePanel extends JPanel implements GameOfLifeListener {
     }
 
     @Override
-    public void CellCreatedAt(Location2D location2D) {
+    public void CellCreatedAt(Location location) {
+        Location2D location2D = (Location2D)location;
         img.setRGB(location2D.getX(), location2D.getY(), AliveRgbColor);
     }
 
     @Override
-    public void CellDiedAt(Location2D location2D) {
+    public void CellDiedAt(Location location) {
+        Location2D location2D = (Location2D)location;
         img.setRGB(location2D.getX(), location2D.getY(), DeadRgbColor);
     }
 }

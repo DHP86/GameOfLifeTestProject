@@ -19,8 +19,8 @@ public class Location2D implements Location {
         return y;
     }
 
-    public ArrayList<Location2D> GetNeighbourLocations() {
-        ArrayList<Location2D> result = new ArrayList<>();
+    public ArrayList<Location> GetNeighbourLocations() {
+        ArrayList<Location> result = new ArrayList<>();
 
         result.add(new Location2D(subtract1(x), subtract1(y)));
         result.add(new Location2D(subtract1(x), y));
