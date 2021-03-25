@@ -4,30 +4,25 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class World {
-    private Cells cells;
+    private final Cells cells;
 
-    public World(Dimension dimension)
-    {
+    public World(Dimension dimension) {
         cells = new Cells(dimension);
     }
 
-    public void Tick(GameOfLifeListener listener)
-    {
+    public void Tick(GameOfLifeListener listener) {
         ArrayList<Location2D> deadCells = new ArrayList<>();
         ArrayList<Location2D> bornCells = new ArrayList<>();
-        for (Location2D location2D : cells.getLocations())
-        {
+        for (Location2D location2D : cells.getLocations()) {
             Cell cell = cells.get(location2D);
             CellEventsListener cellEventsListener = getCellEventsListener(listener, location2D, deadCells, bornCells);
             int numAliveNeighbours = GetNumAliveNeighbours(location2D);
             cell.Tick(cellEventsListener, numAliveNeighbours);
         }
-        for (Location2D location : deadCells)
-        {
+        for (Location2D location : deadCells) {
             cells.SetDeadAt(location);
         }
-        for (Location2D location : bornCells)
-        {
+        for (Location2D location : bornCells) {
             cells.SetAliveAt(location);
         }
     }
@@ -50,8 +45,7 @@ public class World {
 
     private int GetNumAliveNeighbours(Location2D location2D) {
         int result = 0;
-        for (Location2D other : location2D.GetNeighbourLocations())
-        {
+        for (Location2D other : location2D.GetNeighbourLocations()) {
             result += OneIfAlive(other);
         }
         return result;
@@ -59,15 +53,13 @@ public class World {
 
     private int OneIfAlive(Location2D other) {
         Cell cell = cells.get(other);
-        if (cell != null && cell.IsAlive())
-        {
+        if (cell != null && cell.IsAlive()) {
             return 1;
         }
         return 0;
     }
 
-    public void SetAliveAt(Location2D location2D)
-    {
+    public void SetAliveAt(Location2D location2D) {
         cells.SetAliveAt(location2D);
     }
 }
