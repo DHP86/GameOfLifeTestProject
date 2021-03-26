@@ -8,6 +8,13 @@ public class GameOfLifeConfig {
             world.SetAliveAt(new Location2D(i, 490));
         }
 
+        for (int i = 0; i < 1000; i++)
+        {
+            world.SetAliveAt(new Location2D(i, 950));
+            world.SetAliveAt(new Location2D(i, 955));
+            world.SetAliveAt(new Location2D(i, 960));
+        }
+
         for (int j = 0; j < 750; j++) {
             world.SetAliveAt(new Location2D(500, j));
             world.SetAliveAt(new Location2D(150, j));

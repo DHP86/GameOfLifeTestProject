@@ -19,16 +19,10 @@ public class MainWindow extends JFrame {
         int height = 1000;
         panel = new GameOfLifePanel(width, height);
         panel.setPreferredSize(new Dimension(width, height));
-        JButton button = new JButton("Tick");
 
         World world = new World(new Dimension(1000, 1000));
 
         GameOfLifeConfig.ConfigureWorld(world);
-
-        button.addActionListener(e -> {
-            world.Tick(panel);
-            panel.Draw();
-        });
 
         int delay = 200; //milliseconds
         ActionListener taskPerformer = evt -> {
