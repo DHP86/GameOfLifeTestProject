@@ -1,29 +1,40 @@
 package com.testproject.gameoflife;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 import java.util.function.BiConsumer;
 
 public class Cells {
-    private final HashMap<Location, Cell> cells = new HashMap<>();
+    private final HashMap<Location, CellWithNeighbours> cells = new HashMap<>();
 
-    Cells() {
+    public Cells() {
     }
 
     public void InsertAt(Location location, Cell cell) {
-        cells.put(location, cell);
+        cells.put(location, new CellWithNeighbours(cell));
+    }
+
+    public void ConnectNeighbours() {
+        for (var location : cells.keySet()) {
+            var neighbours = location.GetNeighbourLocations();
+            neighbours.forEach(otherLocation -> {
+                var cell1 = cells.get(location);
+                var cell2 = cells.get(otherLocation);
+                cell1.AddNeighbour(cell2);
+            });
+        }
     }
 
     public void SetAliveAt(Location location) {
-        cells.replace(location, new AliveCell());
+        var cell = cells.get(location);
+        cell.SetAlive();
     }
 
     public void SetDeadAt(Location location) {
-        cells.replace(location, new DeadCell());
+        var cell = cells.get(location);
+        cell.SetDead();
     }
 
-    public void SetDeadAt(@NotNull CollectionOfLocations deadLocations) {
+    public void SetDeadAt(CollectionOfLocations deadLocations) {
         deadLocations.setDead(this);
     }
 
@@ -31,45 +42,18 @@ public class Cells {
         bornLocations.setAlive(this);
     }
 
-    private void forEach(BiConsumer<Location, Cell> action) {
+    private void forEach(BiConsumer<Location, CellWithNeighbours> action) {
         for (Location location : cells.keySet()) {
             action.accept(location, cells.get(location));
         }
     }
 
-    public boolean IsAliveAt(Location location) {
-        Cell cell = cells.get(location);
-        if (cell == null) {
-            return false;
-        }
-        return cell.IsAlive();
-    }
-
     public void Tick(GameOfLifeListener listener) {
         var deadLocations = new CollectionOfLocations();
         var bornLocations = new CollectionOfLocations();
-        forEach((location, cell) -> cell.Tick(getCellEventsListener(listener, location, deadLocations, bornLocations), getNumAliveNeighbours(location)));
+        var factory = new CellEventsListenerFactory(listener, deadLocations, bornLocations);
+        forEach((location, cell) -> cell.Tick(factory.GetCellEventsListener(location)));
         SetDeadAt(deadLocations);
         SetAliveAt(bornLocations);
-    }
-
-    private CellEventsListener getCellEventsListener(GameOfLifeListener listener, Location location, CollectionOfLocations deadLocations, CollectionOfLocations bornLocations) {
-        return new CellEventsListener() {
-            @Override
-            public void CellDied() {
-                listener.CellDiedAt(location);
-                deadLocations.add(location);
-            }
-
-            @Override
-            public void CellBorn() {
-                listener.CellCreatedAt(location);
-                bornLocations.add(location);
-            }
-        };
-    }
-
-    private int getNumAliveNeighbours(Location location) {
-        return location.GetNumAliveNeighbours(this);
     }
 }

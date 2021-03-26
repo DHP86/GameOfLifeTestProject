@@ -1,4 +1,9 @@
-package com.testproject.gameoflife;
+package com.testproject.tests;
+
+import com.testproject.gameoflife.Cells;
+import com.testproject.gameoflife.DeadCell;
+import com.testproject.gameoflife.GameOfLifeListener;
+import com.testproject.gameoflife.Location2D;
 
 import java.awt.*;
 
@@ -10,6 +15,7 @@ public class World {
         for (int i = 0; i < dimension.width; i++) {
             addVerticalLineOfDeadCells(i, dimension.height);
         }
+        cells.ConnectNeighbours();
     }
 
     private void addVerticalLineOfDeadCells(int i, int height) {

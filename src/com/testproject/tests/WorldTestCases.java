@@ -2,7 +2,6 @@ package com.testproject.tests;
 
 import com.testproject.gameoflife.GameOfLifeListener;
 import com.testproject.gameoflife.Location2D;
-import com.testproject.gameoflife.World;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,13 @@
 package com.testproject.gui;
 
+import com.testproject.gameoflife.Cells;
+import com.testproject.gameoflife.DeadCell;
 import com.testproject.gameoflife.GameOfLifeListener;
 import com.testproject.gameoflife.Location;
-import com.testproject.gameoflife.Location2D;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 public class GameOfLifePanel extends JPanel implements GameOfLifeListener {
@@ -15,6 +17,24 @@ public class GameOfLifePanel extends JPanel implements GameOfLifeListener {
 
     GameOfLifePanel(int width, int height) {
         img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        var cells = new Cells();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                cells.InsertAt(new GuiLocation2D(i, j, img), new DeadCell());
+            }
+        }
+        cells.ConnectNeighbours();
+
+        GameOfLifeConfig.ConfigureWorld(cells, img);
+
+        int delay = 50; //milliseconds
+        ActionListener taskPerformer = evt -> {
+            cells.Tick(this);
+            Draw();
+        };
+        new Timer(delay, taskPerformer).start();
+
         initializeAllCellsAsDeadCells();
     }
 
@@ -36,13 +56,15 @@ public class GameOfLifePanel extends JPanel implements GameOfLifeListener {
 
     @Override
     public void CellCreatedAt(Location location) {
-        Location2D location2D = (Location2D)location;
-        img.setRGB(location2D.getX(), location2D.getY(), AliveRgbColor);
+        ((GuiLocation2D) location).SetRGBPixel(AliveRgbColor);
     }
 
     @Override
     public void CellDiedAt(Location location) {
-        Location2D location2D = (Location2D)location;
-        img.setRGB(location2D.getX(), location2D.getY(), DeadRgbColor);
+        ((GuiLocation2D) location).SetRGBPixel(DeadRgbColor);
+    }
+
+    public BufferedImage img() {
+        return img;
     }
 }
